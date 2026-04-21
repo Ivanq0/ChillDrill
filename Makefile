@@ -19,5 +19,6 @@ fmt:
 %_test: %_test.o %.a
 	gcc -g -o $@ $^ -lm
 
-test_quad_eq: clear quad_eq_test
-	./quad_eq_test
+	
+test_integral: clear integral_test
+	./integral_test

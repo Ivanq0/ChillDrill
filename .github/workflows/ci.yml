@@ -14,5 +14,5 @@ jobs:
       - name: Checkstyle
         run: make check_fmt
  
-      - name: quad_eq_Test
-        run: make quad_eq_test
+      - name: integral_Test
+        run: make test_integral
