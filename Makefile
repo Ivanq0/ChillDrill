@@ -22,3 +22,6 @@ fmt:
 	
 test_integral: clear integral_test
 	./integral_test
+
+test_allocator: clear allocator_test
+	./allocator_test
