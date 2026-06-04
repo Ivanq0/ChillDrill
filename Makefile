@@ -21,3 +21,6 @@ fmt:
 
 test_quad_eq: clear quad_eq_test
 	./quad_eq_test
+
+test_stack: clear stack_test
+	./stack_test
