@@ -16,3 +16,7 @@ jobs:
  
       - name: quad_eq_Test
         run: make quad_eq_test
+
+      - name: stack_test
+        run: make stack_test
+      
