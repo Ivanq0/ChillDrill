@@ -1,43 +1,46 @@
 #include "allocator.h"
 #include <stdlib.h>
 
-void stub_free(IAllocator *self, void *ptr) {
-  (void)self;
-  (void)ptr;
+// Заглушки для нереализованных операций (необходимы для других аллокаторов)
+void stub_free(IAllocator *alloc, void *mem) {
+  (void)alloc;
+  (void)mem;
 }
 
-void *stub_realloc(IAllocator *self, void *ptr, size_t new_size) {
-  (void)self;
-  (void)ptr;
+void *stub_realloc(IAllocator *alloc, void *mem, size_t new_size) {
+  (void)alloc;
+  (void)mem;
   (void)new_size;
   return NULL;
 }
 
-void stub_reset(IAllocator *self) { (void)self; }
+void stub_reset(IAllocator *alloc) { (void)alloc; }
 
-static void *sys_alloc_impl(IAllocator *self, size_t size) {
-  (void)self;
-  return malloc(size);
+// Вспомогательные функции для системного аллокатора (malloc/realloc/free)
+static void *allocate_sys(IAllocator *alloc, size_t bytes) {
+  (void)alloc;
+  return malloc(bytes);
 }
 
-static void sys_free_impl(IAllocator *self, void *ptr) {
-  (void)self;
+static void free_sys(IAllocator *alloc, void *ptr) {
+  (void)alloc;
   free(ptr);
 }
 
-static void *sys_realloc_impl(IAllocator *self, void *ptr, size_t new_size) {
-  (void)self;
-  return realloc(ptr, new_size);
+static void *realloc_sys(IAllocator *alloc, void *ptr, size_t new_bytes) {
+  (void)alloc;
+  return realloc(ptr, new_bytes);
 }
 
-static void sys_reset_impl(IAllocator *self) { (void)self; }
+static void reset_sys(IAllocator *alloc) { (void)alloc; }
 
+// Создание экземпляра системного аллокатора
 IAllocator create_sys_alloc(void) {
-  IAllocator a;
-  a.alloc = sys_alloc_impl;
-  a.free = sys_free_impl;
-  a.realloc = sys_realloc_impl;
-  a.reset = sys_reset_impl;
-  a.ctx = NULL;
-  return a;
+  IAllocator allocator;
+  allocator.alloc = allocate_sys;
+  allocator.free = free_sys;
+  allocator.realloc = realloc_sys;
+  allocator.reset = reset_sys;
+  allocator.ctx = NULL;
+  return allocator;
 }

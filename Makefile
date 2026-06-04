@@ -19,9 +19,13 @@ fmt:
 %_test: %_test.o %.a
 	gcc -g -o $@ $^ -lm
 
-	
-test_integral: clear integral_test
-	./integral_test
-
-test_allocator: clear allocator_test
-	./allocator_test
+test:
+	@srcs=`ls *.c | grep -v "_test.c"`; \
+	for test_src in *_test.c; do \
+		bin=$${test_src%.c}; \
+		gcc -Wall -Wextra -Werror $$test_src $$srcs -o $$bin; \
+	done
+	@for test in *_test; do \
+		echo "$$test"; \
+		./$$test; \
+	done
